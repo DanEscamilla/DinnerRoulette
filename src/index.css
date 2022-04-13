@@ -1,3 +1,117 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+
+.transition-exit,
+.transition-exit-active,
+.transition-appear,
+.transition-enter,
+.transition-appear-active,
+.transition-enter-active,
+.transition-appear-done,
+.transition-enter-done {
+  display: inline-block !important;
+}
+
+.fade.transition-appear,
+.fade.transition-enter {
+  opacity: 0;
+}
+
+.fade.transition-appear-active,
+.fade.transition-enter-active {
+  opacity: 1;
+  transition: all 1000ms;
+}
+
+.fade.transition-exit {
+  opacity: 1;
+}
+
+.fade.transition-exit-done {
+  display: none;
+}
+
+.fade.transition-exit-active {
+  opacity: 0;
+  transition: all 1000ms;
+}
+
+
+.ease-down.transition-appear,
+.ease-down.transition-enter {
+  transform: translateY(1.5rem);
+}
+
+.ease-down.transition-appear-active,
+.ease-down.transition-enter-active {
+  transform: translateY(0);
+  transition: all 1000ms;
+}
+
+.ease-down.transition-exit {
+  transform: translateY(0);
+}
+
+.ease-down.transition-exit-done {
+  display: none;
+}
+
+.ease-down.transition-exit-active {
+  transform: translateY(1.5rem);
+  transition: all 1000ms;
+}
+
+
+
+.ease-left.transition-appear,
+.ease-left.transition-enter {
+  transform: translateX(-1.5rem);
+}
+
+.ease-left.transition-appear-active,
+.ease-left.transition-enter-active {
+  transform: translateX(0);
+  transition: all 1000ms;
+}
+
+.ease-left.transition-exit {
+  transform: translateX(0);
+}
+
+.ease-left.transition-exit-done {
+  display: none;
+}
+
+.ease-left.transition-exit-active {
+  transform: translateX(-1.5rem);
+  transition: all 1000ms;
+}
+
+
+
+
+.ease-right.transition-appear,
+.ease-right.transition-enter {
+  transform: translateX(1.5rem);
+}
+
+.ease-right.transition-appear-active,
+.ease-right.transition-enter-active {
+  transform: translateX(0);
+  transition: all 1000ms;
+}
+
+.ease-right.transition-exit {
+  transform: translateX(0);
+}
+
+.ease-right.transition-exit-done {
+  display: none;
+}
+
+.ease-right.transition-exit-active {
+  transform: translateX(1.5rem);
+  transition: all 1000ms;
+}

@@ -3,6 +3,7 @@ module.exports = {
   theme: {
     extend: {
       colors: {
+        warning: '#b15000',
         gold: '#f3aa14',
         primary: '#178752',
       },

@@ -18,16 +18,20 @@ function App() {
     }
   }, []);
 
+  const handleYay = (item) => {
+    console.log('Selected ', item);
+  };
+
   const content =
     items.length === 0 ? (
       <div className='w-full h-full flex flex-col justify-center items-center gap-4'>
-        <CircularProgress className='text-[#178752]' />
+        <CircularProgress className='text-primary' />
         <span className='text-lg block'>Polishing the roulette...</span>
       </div>
     ) : (
       <>
         <div className='text-2xl text-center my-4'>Pick a {type}</div>
-        <Roulette items={items} />
+        <Roulette items={items} onYay={handleYay} />
       </>
     );
 
