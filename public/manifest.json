@@ -1,0 +1,23 @@
+{
+  "name": "Dinner Roulette",
+  "description": "Extension to pick a restaurant in the UberEats website",
+  "version": "1.0",
+  "manifest_version": 3,
+  "action": {
+    "default_title": "Roll the roulette!",
+    "default_popup": "/index.html",
+    "default_icon": {
+      "16": "/logos/16.png",
+      "32": "/logos/32.png",
+      "48": "/logos/48.png",
+      "128": "/logos/128.png"
+    }
+  },
+  "icons": {
+    "16": "/logos/16.png",
+    "32": "/logos/32.png",
+    "48": "/logos/48.png",
+    "128": "/logos/128.png"
+  },
+  "permissions": ["activeTab", "scripting"],
+}
