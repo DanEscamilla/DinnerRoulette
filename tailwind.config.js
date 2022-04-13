@@ -7,7 +7,7 @@ module.exports = {
         primary: '#178752',
       },
       animation: {
-        draw: 'draw 5s cubic-bezier(.38,0,.49,1)',
+        draw: 'draw 5s ease-out',
         'table-bounce': 'table-bounce 1s alternate linear 5',
       },
       keyframes: {

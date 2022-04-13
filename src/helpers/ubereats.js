@@ -1,3 +1,5 @@
+import { mockCategories } from './mocks';
+
 export async function fetchCategories() {
   return fetch('https://www.ubereats.com/api/getSearchHomeV2', {
     method: 'POST',
@@ -40,8 +42,20 @@ export async function getCategories() {
   if (sessionCategories) {
     return sessionCategories;
   } else {
-    const categories = await fetchCategories();
-    saveSessionCategories(categories);
-    return categories;
+    try {
+      const categories = await fetchCategories();
+      saveSessionCategories(categories);
+      return categories;
+    } catch (e) {
+      if (process.env.NODE_ENV === 'development') {
+        console.error(e);
+        return mockCategories;
+      }
+    }
   }
+}
+
+export function isCategoryLocation() {
+  const categoriesRegex = /(?:&|\?)q=/g;
+  return categoriesRegex.test(window.location.pathname);
 }
