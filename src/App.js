@@ -4,42 +4,59 @@ import {
   getCategories,
   getCategoryFromPath,
   getRestaurants,
+  validateCategory,
 } from './helpers/ubereats';
 import { CircularProgress } from '@mui/material';
 import { CSSTransition } from 'react-transition-group';
 
 function App() {
   const category = useRef(getCategoryFromPath());
+  const [loading, setLoading] = useState(false);
   const [items, setItems] = useState([]);
   const [type, setType] = useState('');
 
   useEffect(() => {
     if (!category.current) {
       setType('category');
-      getCategories().then((loadedCategories) => {
-        setItems(loadedCategories);
-      });
+      getCategories()
+        .then((loadedCategories) => {
+          setItems(loadedCategories);
+        })
+        .finally(() => {
+          setLoading(false);
+        });
     } else {
       setType('restaurant');
-      getRestaurants(category.current).then((loadedCategories) => {
-        setItems(loadedCategories);
-      });
+      getRestaurants(category.current)
+        .then((loadedCategories) => {
+          setItems(loadedCategories);
+        })
+        .finally(() => {
+          setLoading(false);
+        });
     }
   }, []);
 
   const handleYay = (item) => {
     if (type === 'category') {
       category.current = item.title;
-      setItems([]);
       getRestaurants(category.current).then((loadedRestaurants) => {
-        setType('restaurant');
+        if (loadedRestaurants) setType('restaurant');
         setItems(loadedRestaurants);
       });
     }
   };
 
+  const validate = async (item) => {
+    if (type === 'category') {
+      console.log('validating: ', item.title);
+      return validateCategory(item.title);
+    }
+    return true;
+  };
+
   const content =
-    items.length === 0 ? (
+    loading === 0 ? (
       <div className='w-full h-full flex flex-col justify-center items-center gap-4'>
         <CircularProgress className='text-primary' />
         <span className='text-lg block'>Polishing the roulette...</span>
@@ -68,7 +85,7 @@ function App() {
             </CSSTransition>
           </span>
         </div>
-        <Roulette items={items} onYay={handleYay} />
+        <Roulette items={items} onYay={handleYay} validateItem={validate} />
       </>
     );
 

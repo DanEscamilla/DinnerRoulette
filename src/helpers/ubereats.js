@@ -1,6 +1,4 @@
-import { mockCategories } from './mocks';
-
-export async function fetchCategories() {
+export async function getCategories() {
   return fetch('https://www.ubereats.com/api/getSearchHomeV2', {
     method: 'POST',
     headers: {
@@ -18,49 +16,16 @@ export async function fetchCategories() {
     });
 }
 
-export function saveSessionCategories(categories) {
-  sessionStorage.setItem(
-    'dinnerroulette-categories',
-    JSON.stringify(categories)
-  );
-}
-
-export function getSessionCategories() {
-  const rawCategories = sessionStorage.getItem('dinnerroulette-categories');
-  try {
-    const parsedCategories = JSON.parse(rawCategories);
-    if (Array.isArray(parsedCategories)) {
-      return parsedCategories;
-    }
-  } catch {
-    return null;
-  }
-}
-
-export async function getCategories() {
-  const sessionCategories = getSessionCategories();
-  if (sessionCategories) {
-    return sessionCategories;
-  } else {
-    try {
-      const categories = await fetchCategories();
-      saveSessionCategories(categories);
-      return categories;
-    } catch (e) {
-      if (process.env.NODE_ENV === 'development') {
-        console.error(e);
-        return mockCategories;
-      }
-    }
-  }
-}
-
 export function getCategoryFromPath() {
-  const categoriesRegex = /(?:&|\?)q=([^&\?]+)/;
+  const categoriesRegex = /(?:&|\?)q=([^&?]+)/;
   return (window.location.href.match(categoriesRegex) || [])[1];
 }
 
-export function getRestaurants(category = 'Desserts') {
+export function validateCategory(category) {
+  return getRestaurants(category).then((restaurants) => restaurants.length > 0);
+}
+
+export function getRestaurants(category) {
   return fetch(`https://www.ubereats.com/api/getFeedV1?localeCode=mx`, {
     method: 'POST',
     headers: {
@@ -83,7 +48,8 @@ export function getRestaurants(category = 'Desserts') {
         (fi) =>
           fi.store &&
           !fi.store.imageOverlay &&
-          fi.analyticsLabel == 'SEARCH_STORE_DISH_RESULTS'
+          fi.analyticsLabel === 'SEARCH_STORE_DISH_RESULTS' &&
+          !/cornershopapp/.test(fi.store.actionUrl)
       );
       console.log(data, openRestaurants);
       return openRestaurants.map(({ store }) => ({

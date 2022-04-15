@@ -20,11 +20,15 @@ module.exports = {
         },
       },
       animation: {
-        draw: 'draw 5s ease-out',
-        'table-bounce': 'table-bounce 1s alternate linear 5',
+        'begin-rolling': 'rolling 1s ease-in',
+        rolling: 'rolling 0.5s linear infinite',
+        'end-rolling': 'rolling 5s ease-out',
+        'begin-table-bounce': 'table-bounce 1s ease-in',
+        'table-bounce': 'table-bounce 1s alternate linear infinite',
+        'end-table-bounce': 'table-bounce 5s ease-out',
       },
       keyframes: {
-        draw: {
+        rolling: {
           '0%': {
             'stroke-dashoffset': '0',
           },

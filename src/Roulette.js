@@ -3,23 +3,45 @@ import RouletteSvg from './RouletteSvg';
 import { CSSTransition } from 'react-transition-group';
 import { Fab, Tooltip } from '@mui/material';
 import { Done, Close } from '@mui/icons-material';
+import { shuffleArray } from './helpers/utils';
 
-function App({ items, onYay }) {
+function App({ items, onYay, validateItem, onError }) {
   const [animating, setAnimating] = useState(false);
+  const [rolling, setRolling] = useState(false);
   const [randomItem, setRandomItem] = useState(null);
 
   const handleRollClick = () => {
+    setRolling(true);
     setAnimating(true);
   };
 
+  const isInvalid = async (item) => {
+    return !validateItem || !(await validateItem(item));
+  };
+
+  const getRandomItem = async () => {
+    let shuffledItems = shuffleArray(items);
+    let item = shuffledItems.pop();
+    while (shuffledItems.length > 0 && (await isInvalid(item))) {
+      item = shuffledItems.pop();
+    }
+    if (shuffledItems.length === 0 && (await isInvalid(item))) {
+      onError('No item met the condition');
+    }
+    setRandomItem(item);
+  };
+
   useEffect(() => {
-    console.log('setting ri to null');
     setRandomItem(null);
   }, [items]);
 
   const handleAnimationEnd = () => {
+    setRolling(false);
+  };
+
+  const handleRollingBegun = async () => {
+    await getRandomItem();
     setAnimating(false);
-    setRandomItem(items[Math.floor(Math.random() * items.length)]);
   };
 
   return (
@@ -29,13 +51,14 @@ function App({ items, onYay }) {
           <RouletteSvg
             animating={animating}
             onAnimationEnd={handleAnimationEnd}
+            onRollingBegun={handleRollingBegun}
             className='w-full h-full'
           />
         </div>
       </div>
       <div className='min-h-[3.5rem] text-4xl mb-8 flex justify-center items-center gap-2'>
         <CSSTransition
-          in={!animating && !!randomItem}
+          in={!rolling && !!randomItem}
           timeout={1000}
           classNames='fade ease-left transition'
           appear
@@ -53,7 +76,7 @@ function App({ items, onYay }) {
         </CSSTransition>
 
         <CSSTransition
-          in={!animating && !!randomItem}
+          in={!rolling && !!randomItem}
           timeout={1000}
           classNames='fade ease-down transition'
           appear
@@ -64,7 +87,7 @@ function App({ items, onYay }) {
         </CSSTransition>
 
         <CSSTransition
-          in={!animating && !randomItem}
+          in={!rolling && !randomItem}
           timeout={1000}
           classNames='fade ease-down transition'
           appear
@@ -75,7 +98,7 @@ function App({ items, onYay }) {
         </CSSTransition>
 
         <CSSTransition
-          in={!animating && !!randomItem}
+          in={!rolling && !!randomItem}
           timeout={1000}
           classNames='fade ease-right transition'
           appear
