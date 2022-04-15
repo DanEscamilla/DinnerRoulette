@@ -1,6 +1,10 @@
 import { useEffect, useRef, useState } from 'react';
 import Roulette from './Roulette';
-import { getCategories, getCategoryFromPath } from './helpers/ubereats';
+import {
+  getCategories,
+  getCategoryFromPath,
+  getRestaurants,
+} from './helpers/ubereats';
 import { CircularProgress } from '@mui/material';
 import { CSSTransition } from 'react-transition-group';
 
@@ -17,8 +21,7 @@ function App() {
       });
     } else {
       setType('restaurant');
-      console.log('active catgegory ', category.current);
-      getCategories().then((loadedCategories) => {
+      getRestaurants(category.current).then((loadedCategories) => {
         setItems(loadedCategories);
       });
     }
@@ -26,10 +29,12 @@ function App() {
 
   const handleYay = (item) => {
     if (type === 'category') {
-      console.log('Selected ', item);
       category.current = item.title;
-      setType('restaurant');
-      setItems([{ title: 'R1' }, { title: 'R1' }]);
+      setItems([]);
+      getRestaurants(category.current).then((loadedRestaurants) => {
+        setType('restaurant');
+        setItems(loadedRestaurants);
+      });
     }
   };
 
