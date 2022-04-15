@@ -39,6 +39,32 @@
 }
 
 
+.ease-up.transition-appear,
+.ease-up.transition-enter {
+  transform: translateY(-1.5rem);
+}
+
+.ease-up.transition-appear-active,
+.ease-up.transition-enter-active {
+  transform: translateY(0);
+  transition: all 1000ms;
+}
+
+.ease-up.transition-exit {
+  transform: translateY(0);
+}
+
+.ease-up.transition-exit-done {
+  display: none;
+}
+
+.ease-up.transition-exit-active {
+  transform: translateY(-1.5rem);
+  transition: all 1000ms;
+}
+
+
+
 .ease-down.transition-appear,
 .ease-down.transition-enter {
   transform: translateY(1.5rem);
