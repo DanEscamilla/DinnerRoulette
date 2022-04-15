@@ -1,5 +1,7 @@
 import { mockCategories } from './mocks';
 
+const restaurantLinkRegexp = /store\//g;
+
 export async function fetchCategories() {
   return fetch('https://www.ubereats.com/api/getSearchHomeV2', {
     method: 'POST',
@@ -58,4 +60,28 @@ export async function getCategories() {
 export function isCategoryLocation() {
   const categoriesRegex = /(?:&|\?)q=/g;
   return categoriesRegex.test(window.location.pathname);
+}
+
+export function getRestaurants() {
+  fetch(`/q?=`)
+    .then(function (response) {
+      return response.text();
+    })
+    .then(function (html) {
+      const parser = new DOMParser();
+      const doc = parser.parseFromString(html, 'text/html');
+      const anchors = Array.from(doc.getElementsByTagName('a'));
+      const restaurantAnchors = anchors.filter(
+        (a) =>
+          /store\//.test(a.getAttribute('href')) &&
+          !/http/.test(a.getAttribute('href'))
+      );
+      window.location.href =
+        restaurantAnchors[
+          Math.floor(Math.random() * restaurantAnchors.length - 1)
+        ].getAttribute('href');
+    })
+    .catch(function (err) {
+      console.log('Failed to fetch page: ', err);
+    });
 }

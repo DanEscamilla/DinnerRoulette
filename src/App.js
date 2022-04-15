@@ -1,6 +1,10 @@
 import { useEffect, useState } from 'react';
 import Roulette from './Roulette';
-import { getCategories, isCategoryLocation } from './helpers/ubereats';
+import {
+  getCategories,
+  getRestaurants,
+  isCategoryLocation,
+} from './helpers/ubereats';
 import { CircularProgress } from '@mui/material';
 
 function App() {
@@ -20,6 +24,7 @@ function App() {
 
   const handleYay = (item) => {
     console.log('Selected ', item);
+    window.location.href = item.title;
   };
 
   const content =
