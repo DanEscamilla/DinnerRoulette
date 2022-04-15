@@ -55,7 +55,7 @@ export async function getCategories() {
   }
 }
 
-export function isCategoryLocation() {
-  const categoriesRegex = /(?:&|\?)q=/g;
-  return categoriesRegex.test(window.location.pathname);
+export function getCategoryFromPath() {
+  const categoriesRegex = /(?:&|\?)q=([^&\?]+)/;
+  return (window.location.href.match(categoriesRegex) || [])[1];
 }

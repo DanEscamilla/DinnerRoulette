@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import RouletteSvg from './RouletteSvg';
 import { CSSTransition } from 'react-transition-group';
 import { Fab, Tooltip } from '@mui/material';
@@ -11,6 +11,11 @@ function App({ items, onYay }) {
   const handleRollClick = () => {
     setAnimating(true);
   };
+
+  useEffect(() => {
+    console.log('setting ri to null');
+    setRandomItem(null);
+  }, [items]);
 
   const handleAnimationEnd = () => {
     setAnimating(false);

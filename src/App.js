@@ -1,25 +1,36 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import Roulette from './Roulette';
-import { getCategories, isCategoryLocation } from './helpers/ubereats';
+import { getCategories, getCategoryFromPath } from './helpers/ubereats';
 import { CircularProgress } from '@mui/material';
+import { CSSTransition } from 'react-transition-group';
 
 function App() {
+  const category = useRef(getCategoryFromPath());
   const [items, setItems] = useState([]);
   const [type, setType] = useState('');
 
   useEffect(() => {
-    if (!isCategoryLocation()) {
+    if (!category.current) {
       setType('category');
       getCategories().then((loadedCategories) => {
         setItems(loadedCategories);
       });
     } else {
-      setType('restaurants');
+      setType('restaurant');
+      console.log('active catgegory ', category.current);
+      getCategories().then((loadedCategories) => {
+        setItems(loadedCategories);
+      });
     }
   }, []);
 
   const handleYay = (item) => {
-    console.log('Selected ', item);
+    if (type === 'category') {
+      console.log('Selected ', item);
+      category.current = item.title;
+      setType('restaurant');
+      setItems([{ title: 'R1' }, { title: 'R1' }]);
+    }
   };
 
   const content =
@@ -30,7 +41,28 @@ function App() {
       </div>
     ) : (
       <>
-        <div className='text-2xl text-center my-4'>Pick a {type}</div>
+        <div className='text-2xl text-center my-4'>
+          <span>Pick a </span>
+          <span className='relative text-primary-200'>
+            <span className='invisible'>{type}</span>
+            <CSSTransition
+              in={'category' === type}
+              timeout={1000}
+              classNames='fade ease-up transition'
+              appear
+            >
+              <span className='hidden absolute left-0'>category</span>
+            </CSSTransition>
+            <CSSTransition
+              in={'restaurant' === type}
+              timeout={1000}
+              classNames='fade ease-down transition'
+              appear
+            >
+              <span className='hidden absolute left-0'>restaurant</span>
+            </CSSTransition>
+          </span>
+        </div>
         <Roulette items={items} onYay={handleYay} />
       </>
     );
