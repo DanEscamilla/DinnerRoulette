@@ -90,7 +90,7 @@ function App() {
     );
 
   return (
-    <div className='w-full h-[28rem] md:w-[28rem] flex flex-col text-white'>
+    <div className='w-full h-full py-8 sm:py-0 flex flex-col text-white'>
       {content}
     </div>
   );
