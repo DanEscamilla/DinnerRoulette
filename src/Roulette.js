@@ -47,7 +47,7 @@ function App({ items, onYay, validateItem, onError }) {
   return (
     <div className='flex flex-col flex-1'>
       <div className='flex-1 flex justify-center items-center'>
-        <div className='h-[6rem]'>
+        <div className='h-[8rem]'>
           <RouletteSvg
             animating={animating}
             onAnimationEnd={handleAnimationEnd}
@@ -56,7 +56,7 @@ function App({ items, onYay, validateItem, onError }) {
           />
         </div>
       </div>
-      <div className='min-h-[3.5rem] text-4xl mb-8 flex justify-center items-center gap-2'>
+      <div className='h-48 text-4xl flex justify-center items-center gap-2 w-full'>
         <CSSTransition
           in={!rolling && !!randomItem}
           timeout={1000}
@@ -64,14 +64,16 @@ function App({ items, onYay, validateItem, onError }) {
           appear
         >
           <Tooltip title='Roll again...' className='!hidden'>
-            <Fab
-              color='warning'
-              className='!bg-warning shrink-0'
-              size='small'
-              onClick={handleRollClick}
-            >
-              <Close />
-            </Fab>
+            <div className='min-w-0 w-0 sm:w-auto sm:shrink-0 z-10'>
+              <Fab
+                color='warning'
+                className='!bg-warning'
+                size='small'
+                onClick={handleRollClick}
+              >
+                <Close />
+              </Fab>
+            </div>
           </Tooltip>
         </CSSTransition>
 
@@ -81,8 +83,18 @@ function App({ items, onYay, validateItem, onError }) {
           classNames='fade ease-down transition'
           appear
         >
-          <div className='py-2 px-2 hidden text-center'>
-            {randomItem && randomItem.title}
+          <div className='px-2 w-full sm:w-auto !hidden text-center text-2xl'>
+            <div className='truncate mb-4'>
+              {randomItem && randomItem.title}
+            </div>
+            {randomItem && randomItem.imgUrl && (
+              <div
+                className='flex-1 bg-cover w-full sm:w-48 h-32 bg-no-repeat bg-center rounded-lg mx-auto'
+                style={{
+                  backgroundImage: `url('${randomItem.imgUrl}')`,
+                }}
+              />
+            )}
           </div>
         </CSSTransition>
 
@@ -104,14 +116,16 @@ function App({ items, onYay, validateItem, onError }) {
           appear
         >
           <Tooltip title='Pick a restaurant!' className='!hidden'>
-            <Fab
-              color='primary'
-              className='!bg-primary shrink-0'
-              size='small'
-              onClick={onYay.bind(null, randomItem)}
-            >
-              <Done />
-            </Fab>
+            <div className='min-w-0 w-0 sm:w-auto sm:shrink-0 z-10'>
+              <Fab
+                color='primary'
+                className='!bg-primary -translate-x-full sm:translate-x-0'
+                size='small'
+                onClick={onYay.bind(null, randomItem)}
+              >
+                <Done />
+              </Fab>
+            </div>
           </Tooltip>
         </CSSTransition>
       </div>

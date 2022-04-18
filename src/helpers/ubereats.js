@@ -1,3 +1,5 @@
+import { mockCategories } from './mocks';
+
 export async function getCategories() {
   return fetch('https://www.ubereats.com/api/getSearchHomeV2', {
     method: 'POST',
@@ -9,10 +11,22 @@ export async function getCategories() {
     .then(({ data }) => {
       return data.browseHomeFeed.reduce((categories, section) => {
         if (section.itemType === 'CATEGORY') {
-          return [...categories, ...section.items];
+          return [
+            ...categories,
+            ...section.items.map((item) => ({
+              ...item,
+              imgUrl: item.iconUrl,
+            })),
+          ];
         }
         return categories;
       }, []);
+    })
+    .catch((e) => {
+      if (process.env.NODE_ENV === 'development') {
+        return mockCategories;
+      }
+      console.error(e);
     });
 }
 
@@ -54,12 +68,19 @@ export function getRestaurants(category) {
       console.log(data, openRestaurants);
       return openRestaurants.map(({ store }) => ({
         title: store.title.text,
-        img: store.image.items[store.image.items.length - 1].url,
+        imgUrl: store.image.items[store.image.items.length - 1].url,
         url: store.actionUrl,
         id: store.uuid,
       }));
     })
     .catch(function (err) {
+      if (process.env.NODE_ENV === 'development') {
+        return [
+          {
+            title: 'Fake restaurant',
+          },
+        ];
+      }
       console.log('Failed to fetch page: ', err);
     });
 }

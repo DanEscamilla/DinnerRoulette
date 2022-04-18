@@ -63,7 +63,7 @@ function App() {
       </div>
     ) : (
       <>
-        <div className='text-2xl text-center my-4'>
+        <div className='text-2xl text-center'>
           <span>Pick a </span>
           <span className='relative text-primary-200'>
             <span className='invisible'>{type}</span>

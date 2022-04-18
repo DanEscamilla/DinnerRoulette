@@ -33,7 +33,7 @@ function ActionButton() {
           paper: '!m-0 !max-h-full w-full h-full sm:w-auto sm:h-auto',
         }}
       >
-        <DialogContent className='bg-[#192a30] w-full h-[28rem] sm:w-[28rem]'>
+        <DialogContent className='bg-[#192a30] w-full h-[28rem] sm:w-[28rem] !p-6'>
           <Button
             className='sm:!hidden !absolute !min-w-0 !p-4 top-2 right-2 !rounded-full !overflow-hidden'
             onClick={closeDialog}
