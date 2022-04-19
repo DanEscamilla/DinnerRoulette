@@ -40,10 +40,17 @@ function App() {
   const handleYay = (item) => {
     if (type === 'category') {
       category.current = item.title;
-      getRestaurants(category.current).then((loadedRestaurants) => {
-        if (loadedRestaurants) setType('restaurant');
-        setItems(loadedRestaurants);
-      });
+      setLoading(true);
+      getRestaurants(category.current)
+        .then((loadedRestaurants) => {
+          if (loadedRestaurants) setType('restaurant');
+          setItems(loadedRestaurants);
+        })
+        .finally(() => {
+          setLoading(false);
+        });
+    } else if (type === 'restaurant') {
+      window.location.href = item.actionUrl;
     }
   };
 
@@ -56,7 +63,7 @@ function App() {
   };
 
   const content =
-    loading === 0 ? (
+    loading === true ? (
       <div className='w-full h-full flex flex-col justify-center items-center gap-4'>
         <CircularProgress className='text-primary' />
         <span className='text-lg block'>Polishing the roulette...</span>

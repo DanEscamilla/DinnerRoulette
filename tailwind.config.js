@@ -26,6 +26,10 @@ module.exports = {
         'begin-table-bounce': 'table-bounce 1s ease-in',
         'table-bounce': 'table-bounce 1s alternate linear infinite',
         'end-table-bounce': 'table-bounce 5s ease-out',
+        'top-btn-border': 'top-border-btn 2s linear 0s infinite normal',
+        'bottom-btn-border': 'bottom-border-btn 2s linear 0s infinite normal',
+        'right-btn-border': 'right-border-btn 2s linear 0s infinite normal',
+        'left-btn-border': 'left-border-btn 2s linear 0s infinite normal',
       },
       keyframes: {
         rolling: {
@@ -48,6 +52,56 @@ module.exports = {
 
           '80%': {
             transform: 'translate(-1px, -4px)',
+          },
+        },
+        'top-border-btn': {
+          '0%': {
+            left: '-100%',
+          },
+          '40%': {
+            left: '100%',
+          },
+          '100%': {
+            left: '100%',
+          },
+        },
+        'right-border-btn': {
+          '0%': {
+            top: '-100%',
+          },
+          '20%': {
+            top: '-100%',
+          },
+          '60%': {
+            top: '100%',
+          },
+          '100%': {
+            top: '100%',
+          },
+        },
+        'bottom-border-btn': {
+          '0%': {
+            right: '-100%',
+          },
+          '40%': {
+            right: '-100%',
+          },
+          '80%': {
+            right: '100%',
+          },
+          '100%': {
+            right: '100%',
+          },
+        },
+        'left-border-btn': {
+          '0%': {
+            bottom: '-100%',
+          },
+          '60%': {
+            bottom: '-100%',
+          },
+          '100%': {
+            bottom: '100%',
           },
         },
       },

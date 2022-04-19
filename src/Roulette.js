@@ -2,13 +2,19 @@ import { useEffect, useState } from 'react';
 import RouletteSvg from './RouletteSvg';
 import { CSSTransition } from 'react-transition-group';
 import { Fab, Tooltip } from '@mui/material';
-import { Done, Close } from '@mui/icons-material';
+import { Done, Close, ErrorOutline } from '@mui/icons-material';
 import { shuffleArray } from './helpers/utils';
+import RollBtn from './RollBtn';
 
-function App({ items, onYay, validateItem, onError }) {
+function App({ items, onYay, validateItem }) {
+  const [error, setError] = useState();
   const [animating, setAnimating] = useState(false);
   const [rolling, setRolling] = useState(false);
   const [randomItem, setRandomItem] = useState(null);
+
+  useEffect(() => {
+    setRandomItem(null);
+  }, [items]);
 
   const handleRollClick = () => {
     setRolling(true);
@@ -25,15 +31,12 @@ function App({ items, onYay, validateItem, onError }) {
     while (shuffledItems.length > 0 && (await isInvalid(item))) {
       item = shuffledItems.pop();
     }
-    if (shuffledItems.length === 0 && (await isInvalid(item))) {
-      onError('No item met the condition');
+    if ((shuffledItems.length === 0 && (await isInvalid(item))) || !item) {
+      setError('No more items left');
+    } else {
+      setRandomItem(item);
     }
-    setRandomItem(item);
   };
-
-  useEffect(() => {
-    setRandomItem(null);
-  }, [items]);
 
   const handleAnimationEnd = () => {
     setRolling(false);
@@ -58,13 +61,13 @@ function App({ items, onYay, validateItem, onError }) {
       </div>
       <div className='h-48 text-4xl flex justify-center items-center gap-2 w-full'>
         <CSSTransition
-          in={!rolling && !!randomItem}
+          in={!error && !rolling && !!randomItem}
           timeout={1000}
           classNames='fade ease-left transition'
           appear
         >
           <Tooltip title='Roll again...' className='!hidden'>
-            <div className='min-w-0 w-0 sm:w-auto sm:shrink-0 z-10'>
+            <div className='min-w-0 sm:w-[2.5rem] w-0 sm:w-auto sm:shrink-0 z-10'>
               <Fab
                 color='warning'
                 className='!bg-warning'
@@ -78,12 +81,12 @@ function App({ items, onYay, validateItem, onError }) {
         </CSSTransition>
 
         <CSSTransition
-          in={!rolling && !!randomItem}
+          in={!error && !rolling && !!randomItem}
           timeout={1000}
           classNames='fade ease-down transition'
           appear
         >
-          <div className='px-2 w-full sm:w-auto !hidden text-center text-2xl'>
+          <div className='px-2 w-full sm:w-auto !hidden text-center text-2xl sm:min-w-0'>
             <div className='truncate mb-4'>
               {randomItem && randomItem.title}
             </div>
@@ -99,24 +102,38 @@ function App({ items, onYay, validateItem, onError }) {
         </CSSTransition>
 
         <CSSTransition
-          in={!rolling && !randomItem}
+          in={!error && !rolling && !randomItem}
           timeout={1000}
           classNames='fade ease-down transition'
           appear
         >
-          <button className='py-2 px-6 rounded' onClick={handleRollClick}>
+          <RollBtn className='hidden' onClick={handleRollClick}>
             Roll
-          </button>
+          </RollBtn>
         </CSSTransition>
 
         <CSSTransition
-          in={!rolling && !!randomItem}
+          in={error && !rolling}
+          timeout={1000}
+          classNames='fade ease-down transition'
+          appear
+        >
+          <div className='hidden'>
+            <div className='items-center gap-4 flex flex-col'>
+              <div className='text-2xl'>{error}</div>
+              <ErrorOutline className='text-warning !w-12 !h-12' />
+            </div>
+          </div>
+        </CSSTransition>
+
+        <CSSTransition
+          in={!error && !rolling && !!randomItem}
           timeout={1000}
           classNames='fade ease-right transition'
           appear
         >
           <Tooltip title='Pick a restaurant!' className='!hidden'>
-            <div className='min-w-0 w-0 sm:w-auto sm:shrink-0 z-10'>
+            <div className='min-w-0 w-0 sm:w-[2.5rem] sm:w-auto sm:shrink-0 z-10'>
               <Fab
                 color='primary'
                 className='!bg-primary -translate-x-full sm:translate-x-0'
