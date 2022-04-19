@@ -4,7 +4,7 @@ import { Dialog } from '@mui/material';
 import { useState } from 'react';
 import App from './App';
 
-import Logo from './assets/logo.png';
+import Logo from '../assets/logo.png';
 import CloseIcon from '@mui/icons-material/Close';
 
 function ActionButton() {

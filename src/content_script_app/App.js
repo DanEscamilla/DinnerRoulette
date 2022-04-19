@@ -5,7 +5,7 @@ import {
   getCategoryFromPath,
   getRestaurants,
   validateCategory,
-} from './helpers/ubereats';
+} from '../helpers/ubereats';
 import { CircularProgress } from '@mui/material';
 import { CSSTransition } from 'react-transition-group';
 

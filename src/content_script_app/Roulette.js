@@ -3,7 +3,7 @@ import RouletteSvg from './RouletteSvg';
 import { CSSTransition } from 'react-transition-group';
 import { Fab, Tooltip } from '@mui/material';
 import { Done, Close, ErrorOutline } from '@mui/icons-material';
-import { shuffleArray } from './helpers/utils';
+import { shuffleArray } from '../helpers/utils';
 import RollBtn from './RollBtn';
 
 function App({ items, onYay, validateItem }) {
