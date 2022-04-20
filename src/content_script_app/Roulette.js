@@ -2,11 +2,11 @@ import { useEffect, useState } from 'react';
 import RouletteSvg from './RouletteSvg';
 import { CSSTransition } from 'react-transition-group';
 import { Fab, Tooltip } from '@mui/material';
-import { Done, Close, ErrorOutline } from '@mui/icons-material';
+import { Block, Done, Close, ErrorOutline } from '@mui/icons-material';
 import { shuffleArray } from '../helpers/utils';
 import RollBtn from './RollBtn';
 
-function App({ items, onYay, validateItem }) {
+function App({ items, onYay, validateItem, onBlock }) {
   const [error, setError] = useState();
   const [animating, setAnimating] = useState(false);
   const [rolling, setRolling] = useState(false);
@@ -59,7 +59,7 @@ function App({ items, onYay, validateItem }) {
           />
         </div>
       </div>
-      <div className='h-48 text-4xl flex justify-center items-center gap-2 w-full'>
+      <div className='h-48 text-4xl flex justify-center items-center gap-2 w-full overflow-hidden'>
         <CSSTransition
           in={!error && !rolling && !!randomItem}
           timeout={1000}
@@ -69,6 +69,7 @@ function App({ items, onYay, validateItem }) {
           <Tooltip title='Roll again...' className='!hidden'>
             <div className='min-w-0 sm:w-[2.5rem] w-0 sm:w-auto sm:shrink-0 z-10'>
               <Fab
+                aria-label='Roll again'
                 color='warning'
                 className='!bg-warning'
                 size='small'
@@ -129,12 +130,34 @@ function App({ items, onYay, validateItem }) {
         <CSSTransition
           in={!error && !rolling && !!randomItem}
           timeout={1000}
+          classNames='fade ease-down transition'
+          appear
+        >
+          <Tooltip placement='top' title='Blacklist!' className='!hidden'>
+            <div className='absolute min-w-0 w-[2.5rem] z-10 bottom-12 sm:bottom-4'>
+              <Fab
+                aria-label='Blacklist'
+                color='primary'
+                className='!bg-warning'
+                size='small'
+                onClick={onBlock && onBlock.bind(null, randomItem)}
+              >
+                <Block />
+              </Fab>
+            </div>
+          </Tooltip>
+        </CSSTransition>
+
+        <CSSTransition
+          in={!error && !rolling && !!randomItem}
+          timeout={1000}
           classNames='fade ease-right transition'
           appear
         >
-          <Tooltip title='Pick a restaurant!' className='!hidden'>
+          <Tooltip title='Choose!' className='!hidden'>
             <div className='min-w-0 w-0 sm:w-[2.5rem] sm:w-auto sm:shrink-0 z-10'>
               <Fab
+                aria-label='Choose'
                 color='primary'
                 className='!bg-primary -translate-x-full sm:translate-x-0'
                 size='small'

@@ -8,6 +8,10 @@ import {
 } from '../helpers/ubereats';
 import { CircularProgress } from '@mui/material';
 import { CSSTransition } from 'react-transition-group';
+import {
+  blacklistCategory,
+  blacklistRestaurant,
+} from '../helpers/localstorage';
 
 function App() {
   const category = useRef(getCategoryFromPath());
@@ -54,6 +58,14 @@ function App() {
     }
   };
 
+  const onBlock = (item) => {
+    if (type === 'restaurant') {
+      blacklistRestaurant(item);
+    } else {
+      blacklistCategory(item);
+    }
+  };
+
   const validate = async (item) => {
     if (type === 'category') {
       console.log('validating: ', item.title);
@@ -92,7 +104,12 @@ function App() {
             </CSSTransition>
           </span>
         </div>
-        <Roulette items={items} onYay={handleYay} validateItem={validate} />
+        <Roulette
+          items={items}
+          onYay={handleYay}
+          onBlock={onBlock}
+          validateItem={validate}
+        />
       </>
     );
 

@@ -30,7 +30,8 @@ function ActionButton() {
         open={open}
         onClose={closeDialog}
         classes={{
-          paper: '!m-0 !max-h-full w-full h-full sm:w-auto sm:h-auto',
+          paper:
+            '!m-0 !max-h-full w-full h-full sm:w-auto sm:h-auto overflow-hidden',
         }}
       >
         <DialogContent className='bg-[#192a30] w-full h-[28rem] sm:w-[28rem] !p-6'>
