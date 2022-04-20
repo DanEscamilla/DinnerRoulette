@@ -6,7 +6,10 @@ export function getBlacklistedCategories() {
 }
 
 export function saveBlacklistedCategories(categories) {
-  return JSON.stringify(categories);
+  localStorage.setItem(
+    'dinnerroulette-blacklisted-categories',
+    JSON.stringify(categories)
+  );
 }
 
 export function blacklistCategory(category) {
@@ -23,7 +26,10 @@ export function getBlacklistedRestaurants() {
 }
 
 export function saveBlacklistedRestaurants(restaurants) {
-  return JSON.stringify(restaurants);
+  localStorage.setItem(
+    'dinnerroulette-blacklisted-restaurants',
+    JSON.stringify(restaurants)
+  );
 }
 
 export function blacklistRestaurant(restaurant) {

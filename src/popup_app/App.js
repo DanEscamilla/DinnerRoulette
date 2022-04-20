@@ -24,7 +24,7 @@ function App() {
   );
 
   return (
-    <div className='h-[28rem] sm:w-[28rem] bg-[#192a30] p-4 text-white'>
+    <div className='h-[28rem] w-[28rem] bg-[#192a30] p-4 text-white'>
       {content}
     </div>
   );

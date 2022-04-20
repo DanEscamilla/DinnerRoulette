@@ -59,6 +59,7 @@ function App() {
   };
 
   const onBlock = (item) => {
+    console.log(item);
     if (type === 'restaurant') {
       blacklistRestaurant(item);
     } else {
@@ -68,7 +69,6 @@ function App() {
 
   const validate = async (item) => {
     if (type === 'category') {
-      console.log('validating: ', item.title);
       return validateCategory(item.title);
     }
     return true;

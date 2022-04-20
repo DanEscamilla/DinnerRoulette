@@ -38,6 +38,13 @@ function App({ items, onYay, validateItem, onBlock }) {
     }
   };
 
+  const handleBlock = () => {
+    if (onBlock) {
+      onBlock(randomItem);
+    }
+    handleRollClick();
+  };
+
   const handleAnimationEnd = () => {
     setRolling(false);
   };
@@ -140,7 +147,7 @@ function App({ items, onYay, validateItem, onBlock }) {
                 color='primary'
                 className='!bg-warning'
                 size='small'
-                onClick={onBlock && onBlock.bind(null, randomItem)}
+                onClick={handleBlock}
               >
                 <Block />
               </Fab>
