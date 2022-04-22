@@ -24,5 +24,6 @@
       "matches": ["https://www.ubereats.com/*", "https://ubereats.com/*"],
       "js": ["./static/js/content.bundle.js"]
     }
-  ]
+  ],
+  "permissions": ["storage", "tabs"]
 }

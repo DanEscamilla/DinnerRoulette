@@ -1,5 +1,5 @@
 import Logo from '../assets/logo.png';
-import { FaCog } from 'react-icons/fa';
+
 function Header() {
   return (
     <header className='flex items-center gap-2 mb-4'>
