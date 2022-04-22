@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import {
   getBlacklistedCategories,
   getBlacklistedRestaurants,
@@ -8,12 +8,20 @@ import {
 import BlackList from './BlackList';
 
 function ConfigContent() {
-  const [blacklistedCategories, setBlacklistedCategories] = useState(
-    getBlacklistedCategories()
-  );
-  const [blacklistedRestaurants, setBlacklistedRestaurants] = useState(
-    getBlacklistedRestaurants()
-  );
+  const [blacklistedCategories, setBlacklistedCategories] = useState([]);
+  const [blacklistedRestaurants, setBlacklistedRestaurants] = useState([]);
+
+  useEffect(() => {
+    const loadInitialValues = async () => {
+      const blacklistedCategories = await getBlacklistedCategories();
+      const blacklistedRestaurants = await getBlacklistedRestaurants();
+      console.log(blacklistedCategories);
+      console.log(blacklistedRestaurants);
+      setBlacklistedCategories(blacklistedCategories);
+      setBlacklistedRestaurants(blacklistedRestaurants);
+    };
+    loadInitialValues();
+  }, []);
 
   const blacklistedCategoriesChanged = (_, newValue) => {
     setBlacklistedCategories(newValue);
@@ -28,12 +36,14 @@ function ConfigContent() {
     <div>
       <BlackList
         label='Blacklisted Categories'
+        multiple
         value={blacklistedCategories}
         onChange={blacklistedCategoriesChanged}
         options={[]}
       />
       <BlackList
         label='Blacklisted Restaurant'
+        multiple
         value={blacklistedRestaurants}
         onChange={blacklistedRestaurantsChanged}
         options={[]}

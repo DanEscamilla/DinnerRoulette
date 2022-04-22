@@ -6,7 +6,7 @@ import {
   getRestaurants,
   validateCategory,
 } from '../helpers/ubereats';
-import { CircularProgress } from '@mui/material';
+import { Alert, CircularProgress, Snackbar } from '@mui/material';
 import { CSSTransition } from 'react-transition-group';
 import {
   blacklistCategory,
@@ -18,6 +18,7 @@ function App() {
   const [loading, setLoading] = useState(false);
   const [items, setItems] = useState([]);
   const [type, setType] = useState('');
+  const [snackbarOpen, setSnackbarOpen] = useState(false);
 
   useEffect(() => {
     if (!category.current) {
@@ -59,11 +60,22 @@ function App() {
   };
 
   const onBlock = (item) => {
-    console.log(item);
     if (type === 'restaurant') {
-      blacklistRestaurant(item);
+      blacklistRestaurant(item)
+        .then(() => {
+          setSnackbarOpen(true);
+        })
+        .catch((err) => {
+          console.error(err);
+        });
     } else {
-      blacklistCategory(item);
+      blacklistCategory(item)
+        .then(() => {
+          setSnackbarOpen(true);
+        })
+        .catch((err) => {
+          console.error(err);
+        });
     }
   };
 
@@ -110,6 +122,20 @@ function App() {
           onBlock={onBlock}
           validateItem={validate}
         />
+        <Snackbar
+          open={snackbarOpen}
+          anchorOrigin={{ horizontal: 'center', vertical: 'bottom' }}
+          autoHideDuration={3500}
+          onClose={() => {
+            setSnackbarOpen(false);
+          }}
+        >
+          <Alert severity='success'>
+            {type === 'category'
+              ? 'Category has been blacklisted'
+              : 'Restaurant has been blacklisted'}
+          </Alert>
+        </Snackbar>
       </>
     );
 
