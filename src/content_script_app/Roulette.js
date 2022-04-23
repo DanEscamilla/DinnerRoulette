@@ -22,7 +22,7 @@ function App({ items, onYay, validateItem, onBlock, onRandomItem }) {
   };
 
   const isInvalid = async (item) => {
-    return !validateItem || !(await validateItem(item));
+    return !item || !validateItem || !(await validateItem(item));
   };
 
   const getRandomItem = async () => {
@@ -31,7 +31,7 @@ function App({ items, onYay, validateItem, onBlock, onRandomItem }) {
     while (shuffledItems.length > 0 && (await isInvalid(item))) {
       item = shuffledItems.pop();
     }
-    if ((shuffledItems.length === 0 && (await isInvalid(item))) || !item) {
+    if (shuffledItems.length === 0 && (await isInvalid(item))) {
       setError('No more items left');
     } else {
       if (onRandomItem) {
