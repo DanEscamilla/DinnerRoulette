@@ -7,11 +7,12 @@ function App() {
   const [url, setUrl] = useState();
 
   const isInUberEats = /^https:\/\/www\.ubereats\.com/.test(url);
+  console.log(url);
 
   useEffect(() => {
     if (!chrome.tabs) return;
 
-    chrome.tabs.query({ active: true }, (tabs) => {
+    chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
       setUrl(tabs[0].url);
     });
 
