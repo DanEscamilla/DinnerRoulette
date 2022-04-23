@@ -74,7 +74,7 @@ function App() {
           setLoading(false);
         });
     } else if (type === 'restaurant') {
-      window.location.href = item.actionUrl;
+      window.location.href = item.url;
     }
   };
 
