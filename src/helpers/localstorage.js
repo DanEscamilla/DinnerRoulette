@@ -21,9 +21,11 @@ export function saveBlacklistedCategories(categories) {
 }
 
 export async function blacklistCategory(category) {
-  const blacklistedCategories = new Set(await getBlacklistedCategories());
-  blacklistedCategories.add(category);
-  return saveBlacklistedCategories(Array.from(blacklistedCategories));
+  const blacklistedCategories = await getBlacklistedCategories();
+  if (!blacklistedCategories.find((c) => category.title === c.title)) {
+    blacklistedCategories.push(category);
+  }
+  return saveBlacklistedCategories(blacklistedCategories);
 }
 
 export async function getBlacklistedRestaurants() {
@@ -35,9 +37,11 @@ export function saveBlacklistedRestaurants(restaurants) {
 }
 
 export async function blacklistRestaurant(restaurant) {
-  const blacklistedRestaurants = new Set(await getBlacklistedRestaurants());
-  blacklistedRestaurants.add(restaurant);
-  return saveBlacklistedRestaurants(Array.from(blacklistedRestaurants));
+  const blacklistedRestaurants = await getBlacklistedRestaurants();
+  if (!blacklistedRestaurants.find((r) => restaurant.id === r.id)) {
+    blacklistedRestaurants.push(restaurant);
+  }
+  return saveBlacklistedRestaurants(blacklistedRestaurants);
 }
 
 export async function getMarkedCategories() {
@@ -49,9 +53,11 @@ export function saveMarkedCategories(categories) {
 }
 
 export async function markCategory(category) {
-  const markedCategories = new Set(await getMarkedCategories());
-  markedCategories.add(category);
-  return saveMarkedCategories(Array.from(markedCategories));
+  const markedCategories = await getMarkedCategories();
+  if (!markedCategories.find((c) => category.title === c.title)) {
+    markedCategories.push(category);
+  }
+  return saveMarkedCategories(markedCategories);
 }
 
 export async function getMarkedRestaurants() {
@@ -63,7 +69,9 @@ export function saveMarkedRestaurants(restaurants) {
 }
 
 export async function markRestaurant(restaurant) {
-  const markedRestaurants = new Set(await getMarkedRestaurants());
-  markedRestaurants.add(restaurant);
-  return saveMarkedRestaurants(Array.from(markedRestaurants));
+  const markedRestaurants = await getMarkedRestaurants();
+  if (!markedRestaurants.find((r) => restaurant.id === r.id)) {
+    markedRestaurants.push(restaurant);
+  }
+  return saveMarkedRestaurants(markedRestaurants);
 }
