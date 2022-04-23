@@ -6,10 +6,11 @@ import { Block, Done, Close, ErrorOutline } from '@mui/icons-material';
 import { shuffleArray } from '../helpers/utils';
 import RollBtn from './RollBtn';
 
+const minimalAnimationTime = 500; //in milliseconds
+
 function App({ items, onYay, validateItem, onBlock, onRandomItem }) {
   const mutableItems = useRef([...items]);
   const [error, setError] = useState();
-  const [animating, setAnimating] = useState(false);
   const [rolling, setRolling] = useState(false);
   const [randomItem, setRandomItem] = useState(null);
 
@@ -20,7 +21,10 @@ function App({ items, onYay, validateItem, onBlock, onRandomItem }) {
 
   const handleRollClick = () => {
     setRolling(true);
-    setAnimating(true);
+    setTimeout(async () => {
+      await getRandomItem();
+      setRolling(false);
+    }, minimalAnimationTime);
   };
 
   const isInvalid = async (item) => {
@@ -50,33 +54,17 @@ function App({ items, onYay, validateItem, onBlock, onRandomItem }) {
     handleRollClick();
   };
 
-  const handleAnimationEnd = () => {
-    setRolling(false);
-  };
-
-  const handleRollingBegun = async () => {
-    await getRandomItem();
-    setAnimating(false);
-  };
-
   const handleReset = () => {
     mutableItems.current = [...items];
     setRandomItem(null);
     setError(null);
-    setAnimating(false);
-    setRolling(false);
   };
 
   return (
     <div className='flex flex-col flex-1'>
       <div className='flex-1 flex justify-center items-center'>
         <div className='h-[8rem]'>
-          <RouletteSvg
-            animating={animating}
-            onAnimationEnd={handleAnimationEnd}
-            onRollingBegun={handleRollingBegun}
-            className='w-full h-full'
-          />
+          <RouletteSvg animating={rolling} className='w-full h-full' />
         </div>
       </div>
       <div className='h-48 text-4xl flex justify-center items-center gap-2 w-full overflow-hidden'>

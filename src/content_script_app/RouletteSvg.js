@@ -1,5 +1,3 @@
-import { useEffect, useState } from 'react';
-
 const DashedPath = ({ path, className, onAnimationEnd }) => (
   <path
     className={`stroke-gold ${className ? className : ''}`}
@@ -15,48 +13,8 @@ const DashedPath = ({ path, className, onAnimationEnd }) => (
   />
 );
 
-function RouletteSvg({ animating, onAnimationEnd, className, onRollingBegun }) {
-  const [animationState, setAnimationState] = useState('');
-  var tableAnimationClass;
-
-  useEffect(() => {
-    if (animating) {
-      setAnimationState('begin-rolling');
-    } else if (animationState !== '') {
-      setAnimationState('end-rolling');
-    }
-  }, [animating]);
-
-  const handleAnimationEnd = (e) => {
-    if (animationState === 'end-rolling') {
-      if (typeof onAnimationEnd === 'function') onAnimationEnd(e);
-      setAnimationState('');
-    } else if (animationState === 'begin-rolling') {
-      if (typeof onRollingBegun === 'function') onRollingBegun(e);
-      setAnimationState('rolling');
-    }
-  };
-
-  const handleAnimationIteration = () => {
-    if (animationState === 'rolling' && !animating) {
-      setAnimationState('end-rolling');
-    }
-  };
-
-  switch (animationState) {
-    case 'begin-rolling':
-      tableAnimationClass = 'animate-begin-rolling';
-      break;
-    case 'end-rolling':
-      tableAnimationClass = 'animate-end-rolling';
-      break;
-    case 'rolling':
-      tableAnimationClass = 'animate-rolling';
-      break;
-    default:
-      tableAnimationClass = '';
-      break;
-  }
+function RouletteSvg({ animating, className }) {
+  var tableAnimationClass = animating ? 'animate-rolling' : '';
 
   return (
     <svg
@@ -65,8 +23,6 @@ function RouletteSvg({ animating, onAnimationEnd, className, onRollingBegun }) {
       className={className}
     >
       <DashedPath
-        onAnimationEnd={handleAnimationEnd}
-        onAnimationIteration={handleAnimationIteration}
         className={tableAnimationClass}
         path='M -319.65 289.065 l 0.027 0 c 17.023 0.035 27.123 2.935 32.595 6.945 c 2.9 2.2 4.6 4.6 4.6 7.3 c 0 1.1 -0.3 2.1 -0.8 3.1 c -0.8 1.5 -2.1 2.9 -3.9 4.2 c -6.3 4.6 -18.4 7.7 -32.3 7.7 s -26 -3.1 -32.3 -7.7 c -1.8 -1.3 -3.1 -2.7 -3.9 -4.2 c -0.5 -1 -0.8 -2.1 -0.8 -3.1 c 0.028 -2.01 1.128 -4.01 3.028 -5.91 c 5 -4.8 15.9 -8.3 33.723 -8.335 z'
       />
