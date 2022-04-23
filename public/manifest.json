@@ -22,7 +22,8 @@
   "content_scripts": [
     {
       "matches": ["https://www.ubereats.com/*", "https://ubereats.com/*"],
-      "js": ["./static/js/content.bundle.js"]
+      "js": ["./static/js/content.bundle.js"],
+      "css": ["./static/css/content.css"]
     }
   ],
   "permissions": ["storage", "tabs"]

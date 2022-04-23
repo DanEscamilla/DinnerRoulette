@@ -13,16 +13,33 @@ import {
   markCategory,
   blacklistRestaurant,
   markRestaurant,
+  getBlacklistedCategories,
+  getBlacklistedRestaurants,
 } from '../helpers/localstorage';
 
 function App() {
   const category = useRef(getCategoryFromPath());
+  const blacklistedCategoryMap = useRef({});
+  const blacklistedRestaurantMap = useRef({});
   const [loading, setLoading] = useState(false);
   const [items, setItems] = useState([]);
   const [type, setType] = useState('');
   const [snackbarOpen, setSnackbarOpen] = useState(false);
 
   useEffect(() => {
+    const blacklistPromises = [
+      getBlacklistedCategories(),
+      getBlacklistedRestaurants(),
+    ];
+    Promise.all(blacklistPromises).then(([blCategories, blRestaurants]) => {
+      blCategories.forEach((blCategory) => {
+        blacklistedCategoryMap.current[blCategory.title] = blCategory;
+      });
+      blRestaurants.forEach((blRestaurant) => {
+        blacklistedRestaurantMap.current[blRestaurant.id] = blRestaurant;
+      });
+    });
+
     if (!category.current) {
       setType('category');
       getCategories()
@@ -65,6 +82,7 @@ function App() {
     if (type === 'restaurant') {
       blacklistRestaurant(item)
         .then(() => {
+          blacklistedRestaurantMap.current[item.id] = item;
           setSnackbarOpen(true);
         })
         .catch((err) => {
@@ -73,6 +91,7 @@ function App() {
     } else {
       blacklistCategory(item)
         .then(() => {
+          blacklistedCategoryMap.current[item.title] = item;
           setSnackbarOpen(true);
         })
         .catch((err) => {
@@ -95,9 +114,13 @@ function App() {
 
   const validate = async (item) => {
     if (type === 'category') {
-      return validateCategory(item.title);
+      return (
+        !blacklistedCategoryMap.current[item.title] &&
+        (await validateCategory(item.title))
+      );
+    } else {
+      return !blacklistedRestaurantMap.current[item.id];
     }
-    return true;
   };
 
   const content =
