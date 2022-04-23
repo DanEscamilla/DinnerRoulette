@@ -90,7 +90,7 @@ function App({ items, onYay, validateItem, onBlock, onRandomItem }) {
             <div className='min-w-0 sm:w-[2.5rem] w-0 sm:w-auto sm:shrink-0 z-10'>
               <Fab
                 aria-label='Roll again'
-                color='warning'
+                color='primary'
                 className='!bg-warning'
                 size='small'
                 onClick={handleRollClick}
@@ -169,6 +169,17 @@ function App({ items, onYay, validateItem, onBlock, onRandomItem }) {
               </Fab>
             </div>
           </Tooltip>
+        </CSSTransition>
+
+        <CSSTransition
+          in={rolling}
+          classNames='delayed-enter transition'
+          appear
+          timeout={{ appear: 6000, enter: 6000, exit: 0 }}
+        >
+          <div className='!hidden absolute text-white text-center text-lg'>
+            This is taking longer than usual... hold on!
+          </div>
         </CSSTransition>
 
         <CSSTransition

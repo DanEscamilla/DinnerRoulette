@@ -14,16 +14,23 @@
   display: inline-block !important;
 }
 
+.delayed-enter.transition-appear,
+.delayed-enter.transition-appear-active,
+.delayed-enter.transition-enter-active,
+.delayed-enter.transition-enter,
 .fade.transition-appear,
 .fade.transition-enter {
   opacity: 0;
 }
 
+.delayed-enter.transition-enter-done,
+.delayed-enter.transition-appear-done,
 .fade.transition-appear-active,
 .fade.transition-enter-active {
   opacity: 1;
-  transition: all 1000ms;
+  transition: transform 1000ms, opacity 1000ms;
 }
+
 
 .fade.transition-exit {
   opacity: 1;
@@ -35,7 +42,7 @@
 
 .fade.transition-exit-active {
   opacity: 0;
-  transition: all 1000ms;
+  transition: transform 1000ms, opacity 1000ms;
 }
 
 
@@ -47,7 +54,7 @@
 .ease-up.transition-appear-active,
 .ease-up.transition-enter-active {
   transform: translateY(0);
-  transition: all 1000ms;
+  transition: transform 1000ms, opacity 1000ms;
 }
 
 .ease-up.transition-exit {
@@ -60,11 +67,14 @@
 
 .ease-up.transition-exit-active {
   transform: translateY(-1.5rem);
-  transition: all 1000ms;
+  transition: transform 1000ms, opacity 1000ms;
 }
 
 
-
+.delayed-enter.transition-appear,
+.delayed-enter.transition-appear-active,
+.delayed-enter.transition-enter-active,
+.delayed-enter.transition-enter,
 .ease-down.transition-appear,
 .ease-down.transition-enter {
   transform: translateY(1.5rem);
@@ -73,9 +83,11 @@
 .ease-down.transition-appear-active,
 .ease-down.transition-enter-active {
   transform: translateY(0);
-  transition: all 1000ms;
+  transition: transform 1000ms, opacity 1000ms;
 }
 
+.delayed-enter.transition-enter-done,
+.delayed-enter.transition-appear-done,
 .ease-down.transition-exit {
   transform: translateY(0);
 }
@@ -86,7 +98,7 @@
 
 .ease-down.transition-exit-active {
   transform: translateY(1.5rem);
-  transition: all 1000ms;
+  transition: transform 1000ms, opacity 1000ms;
 }
 
 
@@ -99,7 +111,7 @@
 .ease-left.transition-appear-active,
 .ease-left.transition-enter-active {
   transform: translateX(0);
-  transition: all 1000ms;
+  transition: transform 1000ms, opacity 1000ms;
 }
 
 .ease-left.transition-exit {
@@ -112,7 +124,7 @@
 
 .ease-left.transition-exit-active {
   transform: translateX(-1.5rem);
-  transition: all 1000ms;
+  transition: transform 1000ms, opacity 1000ms;
 }
 
 
@@ -126,7 +138,7 @@
 .ease-right.transition-appear-active,
 .ease-right.transition-enter-active {
   transform: translateX(0);
-  transition: all 1000ms;
+  transition: transform 1000ms, opacity 1000ms;
 }
 
 .ease-right.transition-exit {
@@ -139,5 +151,5 @@
 
 .ease-right.transition-exit-active {
   transform: translateX(1.5rem);
-  transition: all 1000ms;
+  transition: transform 1000ms, opacity 1000ms;
 }
