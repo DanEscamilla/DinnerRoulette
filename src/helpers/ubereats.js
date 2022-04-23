@@ -13,10 +13,12 @@ export async function getCategories() {
         if (section.itemType === 'CATEGORY') {
           return [
             ...categories,
-            ...section.items.map((item) => ({
-              ...item,
-              imgUrl: item.iconUrl,
-            })),
+            ...section.items
+              .filter((item) => item.categoryType === 'CATEGORY')
+              .map((item) => ({
+                ...item,
+                imgUrl: item.iconUrl,
+              })),
           ];
         }
         return categories;
