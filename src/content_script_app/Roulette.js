@@ -1,18 +1,20 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import RouletteSvg from './RouletteSvg';
 import { CSSTransition } from 'react-transition-group';
-import { Fab, Tooltip } from '@mui/material';
+import { Button, Fab, Tooltip } from '@mui/material';
 import { Block, Done, Close, ErrorOutline } from '@mui/icons-material';
 import { shuffleArray } from '../helpers/utils';
 import RollBtn from './RollBtn';
 
 function App({ items, onYay, validateItem, onBlock, onRandomItem }) {
+  const mutableItems = useRef([...items]);
   const [error, setError] = useState();
   const [animating, setAnimating] = useState(false);
   const [rolling, setRolling] = useState(false);
   const [randomItem, setRandomItem] = useState(null);
 
   useEffect(() => {
+    mutableItems.current = [...items];
     setRandomItem(null);
   }, [items]);
 
@@ -26,7 +28,7 @@ function App({ items, onYay, validateItem, onBlock, onRandomItem }) {
   };
 
   const getRandomItem = async () => {
-    let shuffledItems = shuffleArray(items);
+    let shuffledItems = shuffleArray(mutableItems.current);
     let item = shuffledItems.pop();
     while (shuffledItems.length > 0 && (await isInvalid(item))) {
       item = shuffledItems.pop();
@@ -55,6 +57,14 @@ function App({ items, onYay, validateItem, onBlock, onRandomItem }) {
   const handleRollingBegun = async () => {
     await getRandomItem();
     setAnimating(false);
+  };
+
+  const handleReset = () => {
+    mutableItems.current = [...items];
+    setRandomItem(null);
+    setError(null);
+    setAnimating(false);
+    setRolling(false);
   };
 
   return (
@@ -125,7 +135,7 @@ function App({ items, onYay, validateItem, onBlock, onRandomItem }) {
 
         <CSSTransition
           in={error && !rolling}
-          timeout={1000}
+          timeout={{ appear: 1000, enter: 1000, exit: 0 }}
           classNames='fade ease-down transition'
           appear
         >
@@ -133,6 +143,9 @@ function App({ items, onYay, validateItem, onBlock, onRandomItem }) {
             <div className='items-center gap-4 flex flex-col'>
               <div className='text-2xl'>{error}</div>
               <ErrorOutline className='text-warning !w-12 !h-12' />
+              <Button color='primary' onClick={handleReset} variant='contained'>
+                Reset
+              </Button>
             </div>
           </div>
         </CSSTransition>
