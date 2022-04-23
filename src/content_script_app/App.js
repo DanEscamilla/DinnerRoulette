@@ -10,7 +10,9 @@ import { Alert, CircularProgress, Snackbar } from '@mui/material';
 import { CSSTransition } from 'react-transition-group';
 import {
   blacklistCategory,
+  markCategory,
   blacklistRestaurant,
+  markRestaurant,
 } from '../helpers/localstorage';
 
 function App() {
@@ -79,6 +81,18 @@ function App() {
     }
   };
 
+  const onRandomItem = (item) => {
+    if (type === 'restaurant') {
+      markRestaurant(item).catch((err) => {
+        console.error(err);
+      });
+    } else {
+      markCategory(item).catch((err) => {
+        console.error(err);
+      });
+    }
+  };
+
   const validate = async (item) => {
     if (type === 'category') {
       return validateCategory(item.title);
@@ -120,6 +134,7 @@ function App() {
           items={items}
           onYay={handleYay}
           onBlock={onBlock}
+          onRandomItem={onRandomItem}
           validateItem={validate}
         />
         <Snackbar

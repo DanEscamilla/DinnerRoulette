@@ -1,5 +1,7 @@
 import { useEffect, useState } from 'react';
 import {
+  getMarkedCategories,
+  getMarkedRestaurants,
   getBlacklistedCategories,
   getBlacklistedRestaurants,
   saveBlacklistedCategories,
@@ -9,16 +11,21 @@ import BlackList from './BlackList';
 
 function ConfigContent() {
   const [blacklistedCategories, setBlacklistedCategories] = useState([]);
+  const [markedRestaurants, setMarkedRestaurants] = useState([]);
   const [blacklistedRestaurants, setBlacklistedRestaurants] = useState([]);
+  const [markedCategories, setMarkedCategories] = useState([]);
 
   useEffect(() => {
     const loadInitialValues = async () => {
       const blacklistedCategories = await getBlacklistedCategories();
       const blacklistedRestaurants = await getBlacklistedRestaurants();
-      console.log(blacklistedCategories);
-      console.log(blacklistedRestaurants);
+      const markedCategories = await getMarkedCategories();
+      const markedRestaurants = await getMarkedRestaurants();
+
       setBlacklistedCategories(blacklistedCategories);
       setBlacklistedRestaurants(blacklistedRestaurants);
+      setMarkedCategories(markedCategories);
+      setMarkedRestaurants(markedRestaurants);
     };
     loadInitialValues();
   }, []);
@@ -39,14 +46,16 @@ function ConfigContent() {
         multiple
         value={blacklistedCategories}
         onChange={blacklistedCategoriesChanged}
-        options={[]}
+        options={markedCategories}
+        noOptionsText={'Explore the extension to see options!'}
       />
       <BlackList
         label='Blacklisted Restaurant'
         multiple
         value={blacklistedRestaurants}
         onChange={blacklistedRestaurantsChanged}
-        options={[]}
+        options={markedRestaurants}
+        noOptionsText={'Explore the extension to see options!'}
       />
     </div>
   );

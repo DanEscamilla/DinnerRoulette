@@ -57,7 +57,6 @@ function App() {
       </div>
     );
   } else {
-    console.log(url, isInUberEats);
     content = (
       <>
         <Header />

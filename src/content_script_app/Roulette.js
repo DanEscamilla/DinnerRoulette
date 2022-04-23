@@ -6,7 +6,7 @@ import { Block, Done, Close, ErrorOutline } from '@mui/icons-material';
 import { shuffleArray } from '../helpers/utils';
 import RollBtn from './RollBtn';
 
-function App({ items, onYay, validateItem, onBlock }) {
+function App({ items, onYay, validateItem, onBlock, onRandomItem }) {
   const [error, setError] = useState();
   const [animating, setAnimating] = useState(false);
   const [rolling, setRolling] = useState(false);
@@ -34,6 +34,9 @@ function App({ items, onYay, validateItem, onBlock }) {
     if ((shuffledItems.length === 0 && (await isInvalid(item))) || !item) {
       setError('No more items left');
     } else {
+      if (onRandomItem) {
+        onRandomItem(item);
+      }
       setRandomItem(item);
     }
   };

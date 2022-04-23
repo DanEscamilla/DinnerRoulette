@@ -40,54 +40,30 @@ export async function blacklistRestaurant(restaurant) {
   return saveBlacklistedRestaurants(Array.from(blacklistedRestaurants));
 }
 
-// function sendRequestToScript(request) {
-//   if (!chrome.tabs) return;
+export async function getMarkedCategories() {
+  return (await getFromStorage('dinnerroulette-marked-categories')) || [];
+}
 
-//   return new Promise((res) => {
-//     chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
-//       chrome.tabs.sendMessage(tabs[0].id, request, function (response) {
-//         res(response);
-//       });
-//     });
-//   });
-// }
+export function saveMarkedCategories(categories) {
+  return setToStorage('dinnerroulette-marked-categories', categories);
+}
 
-// export function requestCategories() {
-//   return sendRequestToScript({ type: 'GET_CATEGORIES' });
-// }
+export async function markCategory(category) {
+  const markedCategories = new Set(await getMarkedCategories());
+  markedCategories.add(category);
+  return saveMarkedCategories(Array.from(markedCategories));
+}
 
-// export function requestRestaurants() {
-//   return sendRequestToScript({ type: 'GET_RESTAURANTS' });
-// }
+export async function getMarkedRestaurants() {
+  return (await getFromStorage('dinnerroulette-marked-restaurants')) || [];
+}
 
-// export function requestSaveCategories(categories) {
-//   return sendRequestToScript({ type: 'SAVE_CATEGORIES', action: categories });
-// }
+export function saveMarkedRestaurants(restaurants) {
+  return setToStorage('dinnerroulette-marked-restaurants', restaurants);
+}
 
-// export function requestSaveRestaurants(restaurants) {
-//   return sendRequestToScript({ type: 'SAVE_RESTAURANTS', action: restaurants });
-// }
-
-// export function attachExtensionMessageListeners() {
-//   if (!chrome.runtime.onMessage) return;
-
-//   chrome.runtime.onMessage.addListener((request, _, sendResponse) => {
-//     switch (request.type) {
-//       case 'GET_RESTAURANTS':
-//         sendResponse(getBlacklistedRestaurants());
-//         break;
-//       case 'GET_CATEGORIES':
-//         sendResponse(getBlacklistedCategories());
-//         break;
-//       case 'SAVE_CATEGORIES':
-//         saveBlacklistedCategories(request.payload);
-//         break;
-//       case 'SAVE_RESTAURANTS':
-//         saveBlacklistedRestaurants(request.payload);
-//         break;
-//       default:
-//         sendResponse({ error: 'Unknown request type' });
-//         break;
-//     }
-//   });
-// }
+export async function markRestaurant(restaurant) {
+  const markedRestaurants = new Set(await getMarkedRestaurants());
+  markedRestaurants.add(restaurant);
+  return saveMarkedRestaurants(Array.from(markedRestaurants));
+}
