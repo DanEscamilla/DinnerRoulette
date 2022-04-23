@@ -7,7 +7,6 @@ function App() {
   const [url, setUrl] = useState();
 
   const isInUberEats = /^https:\/\/www\.ubereats\.com/.test(url);
-  console.log(url);
 
   useEffect(() => {
     if (!chrome.tabs) return;
@@ -37,6 +36,12 @@ function App() {
     };
   }, []);
 
+  const handleLinkClick = () => {
+    chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
+      chrome.tabs.update(tabs[0].tabId, { url: 'https://www.ubereats.com' });
+    });
+  };
+
   let content;
 
   if (!url) {
@@ -50,9 +55,12 @@ function App() {
       <div className='w-full h-full flex justify-center items-center text-center text-2xl'>
         <div>
           Navigate to{' '}
-          <a className='text-primary' href='https://www.ubereats.com'>
+          <button
+            className='text-primary hover:text-primary-300'
+            onClick={handleLinkClick}
+          >
             Ubereats.com
-          </a>{' '}
+          </button>{' '}
           in order to use this extension.
         </div>
       </div>
