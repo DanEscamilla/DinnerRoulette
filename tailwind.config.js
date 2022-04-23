@@ -20,12 +20,10 @@ module.exports = {
         },
       },
       animation: {
-        'begin-rolling': 'rolling 1s ease-in',
+        'begin-rolling': 'rolling 0.5s linear',
         rolling: 'rolling 0.5s linear infinite',
-        'end-rolling': 'rolling 5s ease-out',
-        'begin-table-bounce': 'table-bounce 1s ease-in',
-        'table-bounce': 'table-bounce 1s alternate linear infinite',
-        'end-table-bounce': 'table-bounce 5s ease-out',
+        'end-rolling': 'rolling 0.5s linear',
+
         'top-btn-border': 'top-border-btn 2s linear 0s infinite normal',
         'bottom-btn-border': 'bottom-border-btn 2s linear 0s infinite normal',
         'right-btn-border': 'right-border-btn 2s linear 0s infinite normal',
@@ -35,23 +33,6 @@ module.exports = {
         rolling: {
           '0%': {
             'stroke-dashoffset': '0',
-          },
-        },
-        'table-bounce': {
-          '0%': {
-            transform: 'translate(0, 0px)',
-          },
-
-          '20%': {
-            transform: 'translate(-1px, -2px)',
-          },
-
-          '40%': {
-            transform: 'translate(-2px, 0)',
-          },
-
-          '80%': {
-            transform: 'translate(-1px, -4px)',
           },
         },
         'top-border-btn': {
