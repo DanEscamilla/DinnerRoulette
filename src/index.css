@@ -2,6 +2,13 @@
 @tailwind components;
 @tailwind utilities;
 
+.delayed-enter.transition-exit,
+.delayed-enter.transition-exit-active,
+.delayed-enter.transition-exit-done {
+  opacity: 0;
+  transition: none;
+}
+
 
 .transition-exit,
 .transition-exit-active,
