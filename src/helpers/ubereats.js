@@ -67,7 +67,6 @@ export function getRestaurants(category) {
           fi.analyticsLabel === 'SEARCH_STORE_DISH_RESULTS' &&
           !/cornershopapp/.test(fi.store.actionUrl)
       );
-      console.log(data, openRestaurants);
       return openRestaurants.map(({ store }) => ({
         title: store.title.text,
         imgUrl: store.image.items[store.image.items.length - 1].url,
