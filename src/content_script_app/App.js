@@ -21,7 +21,7 @@ function App() {
   const category = useRef(getCategoryFromPath());
   const blacklistedCategoryMap = useRef({});
   const blacklistedRestaurantMap = useRef({});
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
   const [items, setItems] = useState([]);
   const [type, setType] = useState('');
   const [snackbarOpen, setSnackbarOpen] = useState(false);
