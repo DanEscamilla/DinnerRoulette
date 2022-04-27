@@ -70,7 +70,7 @@ function App({ items, onYay, validateItem, onBlock, onRandomItem }) {
       <div className='h-48 text-4xl flex justify-center items-center gap-2 w-full overflow-hidden'>
         <CSSTransition
           in={!error && !rolling && !!randomItem}
-          timeout={1000}
+          timeout={{ appear: 1000, enter: 1000, exit: 500 }}
           classNames='fade ease-left transition'
           appear
         >
@@ -91,7 +91,7 @@ function App({ items, onYay, validateItem, onBlock, onRandomItem }) {
 
         <CSSTransition
           in={!error && !rolling && !!randomItem}
-          timeout={1000}
+          timeout={{ appear: 1000, enter: 1000, exit: 500 }}
           classNames='fade ease-down transition'
           appear
         >
@@ -112,7 +112,7 @@ function App({ items, onYay, validateItem, onBlock, onRandomItem }) {
 
         <CSSTransition
           in={!error && !rolling && !randomItem}
-          timeout={1000}
+          timeout={{ appear: 1000, enter: 1000, exit: 500 }}
           classNames='fade ease-down transition'
           appear
         >
@@ -140,7 +140,7 @@ function App({ items, onYay, validateItem, onBlock, onRandomItem }) {
 
         <CSSTransition
           in={!error && !rolling && !!randomItem}
-          timeout={1000}
+          timeout={{ appear: 1000, enter: 1000, exit: 500 }}
           classNames='fade ease-down transition'
           appear
         >
@@ -172,7 +172,7 @@ function App({ items, onYay, validateItem, onBlock, onRandomItem }) {
 
         <CSSTransition
           in={!error && !rolling && !!randomItem}
-          timeout={1000}
+          timeout={{ appear: 1000, enter: 1000, exit: 500 }}
           classNames='fade ease-right transition'
           appear
         >
