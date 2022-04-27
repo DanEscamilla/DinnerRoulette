@@ -5,20 +5,8 @@ import './index.css';
 
 import App from './popup_app/App';
 
-import { createTheme, ThemeProvider } from '@mui/material/styles';
-
-const theme = createTheme({
-  palette: {
-    mode: 'dark',
-    type: 'dark',
-    primary: {
-      main: '#1b9d5f',
-    },
-    secondary: {
-      main: '#f50057',
-    },
-  },
-});
+import { ThemeProvider } from '@mui/material/styles';
+import { theme } from './helpers/theme';
 
 ReactDOM.render(
   <React.StrictMode>
