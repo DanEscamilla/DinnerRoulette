@@ -15,7 +15,7 @@ import {
   markRestaurant,
   getBlacklistedCategories,
   getBlacklistedRestaurants,
-} from '../helpers/localstorage';
+} from '../helpers/storage';
 
 function App() {
   const category = useRef(getCategoryFromPath());

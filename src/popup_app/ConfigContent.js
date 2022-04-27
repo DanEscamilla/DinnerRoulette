@@ -6,7 +6,7 @@ import {
   getBlacklistedRestaurants,
   saveBlacklistedCategories,
   saveBlacklistedRestaurants,
-} from '../helpers/localstorage';
+} from '../helpers/storage';
 import BlackList from './BlackList';
 
 function ConfigContent() {
