@@ -60,12 +60,12 @@ function App() {
     if (state.type === 'restaurant') {
       blacklistRestaurant(item).then(() => {
         blacklistedRestaurantMap.current[item.id] = item;
-        setSnackbarOpen(true);
+        setSnackbarOpen(dispatch, true);
       });
     } else {
       blacklistCategory(item).then(() => {
         blacklistedCategoryMap.current[item.title] = item;
-        setSnackbarOpen(true);
+        setSnackbarOpen(dispatch, true);
       });
     }
   };
@@ -131,7 +131,7 @@ function App() {
           anchorOrigin={{ horizontal: 'center', vertical: 'bottom' }}
           autoHideDuration={3500}
           onClose={() => {
-            setSnackbarOpen(false);
+            setSnackbarOpen(dispatch, false);
           }}
         >
           <Alert severity='success'>
