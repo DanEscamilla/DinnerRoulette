@@ -6,8 +6,7 @@ import {
   getRestaurants,
   validateCategory,
 } from '../helpers/ubereats';
-import { Alert, CircularProgress, Snackbar } from '@mui/material';
-import { CSSTransition } from 'react-transition-group';
+import { Alert, Snackbar } from '@mui/material';
 import {
   blacklistCategory,
   markCategory,
@@ -23,6 +22,8 @@ import {
   setLoading,
 } from '../helpers/reducer';
 import { useBlacklists } from '../helpers/storage';
+import LoadingPage from './LoadingPage';
+import RouletteHeader from './RouletteHeader';
 
 function App() {
   const [state, dispatch] = useReducer(reducer, {
@@ -91,34 +92,10 @@ function App() {
 
   const content =
     state.loading === true ? (
-      <div className='w-full h-full flex flex-col justify-center items-center gap-4'>
-        <CircularProgress className='text-primary' />
-        <span className='text-lg block'>Polishing the roulette...</span>
-      </div>
+      <LoadingPage />
     ) : (
       <>
-        <div className='text-2xl text-center'>
-          <span>Pick a </span>
-          <span className='relative text-primary-200'>
-            <span className='invisible'>{state.type}</span>
-            <CSSTransition
-              in={'category' === state.type}
-              timeout={1000}
-              classNames='fade ease-up transition'
-              appear
-            >
-              <span className='hidden absolute left-0'>category</span>
-            </CSSTransition>
-            <CSSTransition
-              in={'restaurant' === state.type}
-              timeout={1000}
-              classNames='fade ease-down transition'
-              appear
-            >
-              <span className='hidden absolute left-0'>restaurant</span>
-            </CSSTransition>
-          </span>
-        </div>
+        <RouletteHeader type={state.type} />
         <Roulette
           items={state.items}
           onYay={handleYay}

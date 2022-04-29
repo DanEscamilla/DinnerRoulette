@@ -1,5 +1,4 @@
 import { Button, DialogContent, Fab } from '@mui/material';
-// import CloseIcon from '@mui/icons-material/Close';
 import { Dialog } from '@mui/material';
 import { useState } from 'react';
 import App from './App';
