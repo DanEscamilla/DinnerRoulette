@@ -71,7 +71,7 @@ export function getRestaurants(category) {
         title: store.title.text,
         imgUrl: store.image.items[store.image.items.length - 1].url,
         url: store.actionUrl,
-        id: store.uuid,
+        id: store.storeUuid,
       }));
     })
     .catch(function (err) {

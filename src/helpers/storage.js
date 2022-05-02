@@ -1,3 +1,5 @@
+import { useEffect, useRef } from 'react';
+
 async function getFromStorage(key) {
   return new Promise((res) => {
     chrome.storage.sync.get([key], (result) => {
@@ -74,4 +76,30 @@ export async function markRestaurant(restaurant) {
     markedRestaurants.push(restaurant);
   }
   return saveMarkedRestaurants(markedRestaurants);
+}
+
+export function useBlacklists() {
+  const blacklistedCategoryMap = useRef({});
+  const blacklistedRestaurantMap = useRef({});
+
+  useEffect(() => {
+    const blacklistPromises = [
+      getBlacklistedCategories(),
+      getBlacklistedRestaurants(),
+    ];
+
+    Promise.all(blacklistPromises).then(([blCategories, blRestaurants]) => {
+      blCategories.forEach((blCategory) => {
+        blacklistedCategoryMap.current[blCategory.title] = blCategory;
+      });
+      blRestaurants.forEach((blRestaurant) => {
+        blacklistedRestaurantMap.current[blRestaurant.id] = blRestaurant;
+      });
+    });
+  });
+
+  return {
+    blacklistedCategoryMap,
+    blacklistedRestaurantMap,
+  };
 }

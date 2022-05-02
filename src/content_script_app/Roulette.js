@@ -1,10 +1,13 @@
 import { useEffect, useState, useRef } from 'react';
 import RouletteSvg from './RouletteSvg';
 import { CSSTransition } from 'react-transition-group';
-import { Button, Fab, Tooltip } from '@mui/material';
-import { Block, Done, Close, ErrorOutline } from '@mui/icons-material';
+import { Button } from '@mui/material';
+import { ErrorOutline } from '@mui/icons-material';
 import { shuffleArray } from '../helpers/utils';
 import RollBtn from './RollBtn';
+import Nay from './buttons/Nay';
+import Yay from './buttons/Yay';
+import BlockBtn from './buttons/BlockBtn';
 
 const minimalAnimationTime = 500; //in milliseconds
 
@@ -70,28 +73,16 @@ function App({ items, onYay, validateItem, onBlock, onRandomItem }) {
       <div className='h-48 text-4xl flex justify-center items-center gap-2 w-full overflow-hidden'>
         <CSSTransition
           in={!error && !rolling && !!randomItem}
-          timeout={1000}
+          timeout={{ appear: 1000, enter: 1000, exit: 500 }}
           classNames='fade ease-left transition'
           appear
         >
-          <Tooltip title='Roll again...' className='!hidden'>
-            <div className='min-w-0 sm:w-[2.5rem] w-0 sm:w-auto sm:shrink-0 z-10'>
-              <Fab
-                aria-label='Roll again'
-                color='primary'
-                className='!bg-warning'
-                size='small'
-                onClick={handleRollClick}
-              >
-                <Close />
-              </Fab>
-            </div>
-          </Tooltip>
+          <Nay onClick={handleRollClick} className='!hidden' />
         </CSSTransition>
 
         <CSSTransition
           in={!error && !rolling && !!randomItem}
-          timeout={1000}
+          timeout={{ appear: 1000, enter: 1000, exit: 500 }}
           classNames='fade ease-down transition'
           appear
         >
@@ -112,7 +103,7 @@ function App({ items, onYay, validateItem, onBlock, onRandomItem }) {
 
         <CSSTransition
           in={!error && !rolling && !randomItem}
-          timeout={1000}
+          timeout={{ appear: 1000, enter: 1000, exit: 500 }}
           classNames='fade ease-down transition'
           appear
         >
@@ -140,23 +131,11 @@ function App({ items, onYay, validateItem, onBlock, onRandomItem }) {
 
         <CSSTransition
           in={!error && !rolling && !!randomItem}
-          timeout={1000}
+          timeout={{ appear: 1000, enter: 1000, exit: 500 }}
           classNames='fade ease-down transition'
           appear
         >
-          <Tooltip placement='top' title='Blacklist!' className='!hidden'>
-            <div className='absolute min-w-0 w-[2.5rem] z-10 bottom-12 sm:bottom-4'>
-              <Fab
-                aria-label='Blacklist'
-                color='primary'
-                className='!bg-warning'
-                size='small'
-                onClick={handleBlock}
-              >
-                <Block />
-              </Fab>
-            </div>
-          </Tooltip>
+          <BlockBtn onClick={handleBlock} className='!hidden' />
         </CSSTransition>
 
         <CSSTransition
@@ -172,23 +151,11 @@ function App({ items, onYay, validateItem, onBlock, onRandomItem }) {
 
         <CSSTransition
           in={!error && !rolling && !!randomItem}
-          timeout={1000}
+          timeout={{ appear: 1000, enter: 1000, exit: 500 }}
           classNames='fade ease-right transition'
           appear
         >
-          <Tooltip title='Choose!' className='!hidden'>
-            <div className='min-w-0 w-0 sm:w-[2.5rem] sm:w-auto sm:shrink-0 z-10'>
-              <Fab
-                aria-label='Choose'
-                color='primary'
-                className='!bg-primary -translate-x-full sm:translate-x-0'
-                size='small'
-                onClick={onYay.bind(null, randomItem)}
-              >
-                <Done />
-              </Fab>
-            </div>
-          </Tooltip>
+          <Yay onClick={onYay.bind(null, randomItem)} className='!hidden' />
         </CSSTransition>
       </div>
     </div>
