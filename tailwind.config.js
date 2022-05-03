@@ -23,7 +23,7 @@ module.exports = {
         'begin-rolling': 'rolling 0.5s linear',
         rolling: 'rolling 0.5s linear infinite',
         'end-rolling': 'rolling 0.5s linear',
-
+        pulse: 'pulse 2s cubic-bezier(.5,.5,0,1) 0s infinite normal',
         'top-btn-border': 'top-border-btn 2s linear 0s infinite normal',
         'bottom-btn-border': 'bottom-border-btn 2s linear 0s infinite normal',
         'right-btn-border': 'right-border-btn 2s linear 0s infinite normal',
@@ -83,6 +83,14 @@ module.exports = {
           },
           '100%': {
             bottom: '100%',
+          },
+        },
+        pulse: {
+          '0%': {
+            opacity: '0.4',
+          },
+          '100%': {
+            transform: 'scale(1)',
           },
         },
       },
