@@ -78,6 +78,14 @@ export async function markRestaurant(restaurant) {
   return saveMarkedRestaurants(markedRestaurants);
 }
 
+export function getTour() {
+  return getFromStorage('dinnerroulette-tour');
+}
+
+export function setTour() {
+  return setToStorage('dinnerroulette-tour', true);
+}
+
 export function useBlacklists() {
   const blacklistedCategoryMap = useRef({});
   const blacklistedRestaurantMap = useRef({});
