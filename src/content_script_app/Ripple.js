@@ -21,7 +21,7 @@ function Ripple({ show, size, className, numOfRipples, animationDuration }) {
           animationDelay: `${(animationDuration / numOfRipples) * idx}ms`,
           animationDuration: `${animationDuration}ms`,
         }}
-        className={`animate-pulse opacity-0 origin-center fill-white`}
+        className={`animate-dr-pulse opacity-0 origin-center fill-white`}
       />
     ));
   }, [numOfRipples, size, animationDuration]);
