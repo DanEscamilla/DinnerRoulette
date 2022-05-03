@@ -6,7 +6,7 @@ import App from './App';
 import Logo from '../assets/logo.png';
 import CloseIcon from '@mui/icons-material/Close';
 import { getTour, setTour } from '../helpers/storage';
-import Ripple from './Ripple';
+import Tour from './Tour';
 
 function ActionButton() {
   const [showBackdrop, setShowBackdrop] = useState(false);
@@ -37,12 +37,7 @@ function ActionButton() {
       >
         <img src={Logo} className='w-10 h-10' alt='dinner roulette logo' />
       </Fab>
-      <Ripple
-        show={showBackdrop}
-        size={400}
-        numOfRipples={2}
-        className='fixed bottom-11 right-11 translate-x-1/2 translate-y-1/2'
-      />
+      <Tour show={showBackdrop} />
       <Dialog
         open={open}
         onClose={closeDialog}
@@ -67,7 +62,7 @@ function ActionButton() {
   return (
     <>
       <Backdrop
-        classes={{ root: '!bg-black !bg-opacity-80 z-10' }}
+        classes={{ root: '!bg-black !bg-opacity-90 z-10' }}
         open={showBackdrop}
       >
         {actionButton}
