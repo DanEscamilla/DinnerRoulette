@@ -1,7 +1,7 @@
 {
   "name": "Dinner Roulette",
   "description": "Extension for randomly picking a restaurant in UberEats",
-  "version": "1.01",
+  "version": "1.1",
   "manifest_version": 3,
   "action": {
     "default_title": "Dinner roulette configuration",
